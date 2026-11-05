@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>数字盲盒</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header><div class="logo">🔢 数字盲盒</div><div class="tag">5人实时推理游戏</div></header>
+  <main>
+    <section id="entry" class="panel">
+      <h1>看见别人的数字，猜出自己的数字</h1>
+      <p class="muted">五名玩家 · 1—100 · 数字不重复</p>
+      <label>你的昵称<input id="nickname" maxlength="12" placeholder="输入昵称"></label>
+      <div class="actions">
+        <button id="createBtn" class="primary">创建房间</button>
+      </div>
+      <div class="joinrow"><input id="roomInput" maxlength="6" placeholder="输入六位房间号"><button id="joinBtn">加入房间</button></div>
+      <p class="hint">创建房间后，把房间号分享给另外四位玩家。</p>
+    </section>
+
+    <section id="lobby" class="panel hidden">
+      <div class="roomhead"><div><span class="muted">房间号</span><strong id="roomCode">------</strong></div><button id="copyBtn" class="small">复制房间号</button></div>
+      <h2>等待玩家加入 <span id="playerCount">1/5</span></h2>
+      <div id="lobbyPlayers" class="players"></div>
+      <p id="lobbyMessage" class="muted">等待其他玩家加入……</p>
+      <button id="startBtn" class="primary wide" disabled>五人到齐后开始</button>
+    </section>
+
+    <section id="game" class="hidden">
+      <div class="gamegrid">
+        <div class="panel mycard">
+          <div class="eyebrow">你的数字</div><div id="myNumber" class="mynumber">?</div>
+          <div id="myName" class="muted"></div>
+          <div class="rangehint">数字范围：1—100</div>
+          <div id="myStatus" class="status">等待游戏开始</div>
+        </div>
+        <div class="panel">
+          <h2>其他玩家的数字</h2>
+          <div id="otherNumbers" class="othernumbers"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="turnline"><h2>游戏进程</h2><span id="turnLabel" class="pill"></span></div>
+        <div id="lastQuestion" class="question">暂时还没有人提问</div>
+        <p id="gameMessage" class="muted"></p>
+        <div class="players compact" id="gamePlayers"></div>
+      </div>
+      <div class="panel controls">
+        <h2>轮到你时，可以提出一个问题</h2>
+        <p class="muted">例如：我的数字比50大吗？其他玩家请根据自己看到的数字口头回答“是”或“否”。</p>
+        <div class="askrow"><input id="questionInput" maxlength="100" placeholder="输入你的问题"><button id="askBtn" class="primary">提交问题</button></div>
+        <hr>
+        <h2>猜测自己的数字</h2>
+        <div class="guessrow"><input id="guessInput" type="number" min="1" max="100" placeholder="输入1—100的整数"><button id="guessBtn">提交猜测</button></div>
+        <p id="guessFeedback" class="feedback">你有3次猜测机会。猜错会消耗一次机会。</p>
+      </div>
+    </section>
+
+    <section id="result" class="panel hidden">
+      <h1>本局结束</h1><p class="muted">数字揭晓！看看大家的推理结果。</p>
+      <div id="resultList" class="results"></div>
+      <button id="backBtn" class="primary wide">返回首页</button>
+    </section>
+    <div id="toast" class="toast hidden"></div>
+  </main>
+  <footer>数字盲盒 · 和朋友一起推理</footer>
+</div>
+<script src="/socket.io/socket.io.js"></script><script src="app.js"></script>
+</body></html>
